@@ -1,0 +1,9 @@
+{
+  "name": "tabata",
+  "source-directories": [
+    "source"
+  ],
+  "test-directories": [
+    "tests"
+  ]
+}
