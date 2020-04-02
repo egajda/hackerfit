@@ -4,7 +4,7 @@ A fun way to improve your fitness and coding abilities
 
 ## Adventure
 
-### V0: Getting Comfortable
+### V0: Getting Started
 - [ ] Make the number 0 appear on the screen
 - [ ] Create a component that displays a button
 - [ ] Make a counter increments the number when you press the button
@@ -13,10 +13,6 @@ A fun way to improve your fitness and coding abilities
 - [ ] Change the background color to red #FF0000
 - [ ] Conditionally change background color: counter == 0 ~ white, counter > 0 ~ green, counter < 0 ~ red
 - [ ] Refactor your code into a component called V0. Call V0 in Main
-
-### V1
-- [ ] Make a new component called V1
-
 
 https://dev.to/gdotdesign/mint-routing-2h69
 
