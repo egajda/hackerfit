@@ -5,17 +5,13 @@ A fun way to improve your fitness and coding abilities
 ## Adventure
 
 ### V0: Getting Comfortable
-- [ ] Make the number 0 appear on the screen
-- [ ] Create a component that displays a button
-- [ ] Make a counter increments the number when you press the button
-- [ ] Add a second button that decrements the counter
-- [ ] Change the background color to green #00FF00
-- [ ] Change the background color to red #FF0000
-- [ ] Conditionally change background color: counter == 0 ~ white, counter > 0 ~ green, counter < 0 ~ red
-- [ ] Refactor your code into a component called V0. Call V0 in Main
+Checkout branch 'getting-started' for an easy list of tasks that will serve as and intro
 
 ### V1
-- [ ] Make a new component called V1
+- [x] Working Tabata Timer
+- [x] Changes color
+- [x] Displays current round
+- [ ] Configurable Settings
 
 
 https://dev.to/gdotdesign/mint-routing-2h69
