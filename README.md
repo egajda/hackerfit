@@ -5,16 +5,14 @@ A fun way to improve your fitness and coding abilities
 ## Adventure
 
 ### V0: Getting Comfortable
-Checkout branch 'getting-started' for an easy list of tasks that will serve as and intro
+Checkout branch 'getting-started' for an easy list of tasks that will serve as an intro
 
 ### V1
 - [x] Working Tabata Timer
 - [x] Changes color
 - [x] Displays current round
 - [ ] Configurable Settings
-
-
-https://dev.to/gdotdesign/mint-routing-2h69
+- [ ] Sound effects
 
 
 

@@ -1,5 +1,13 @@
 {
   "name": "tabata",
+  "application":
+    {
+      "title": "Hacker Fit",
+      "name": "Hacker Fit",
+      "theme-color": "#FFFFFF",
+      "display": "standalone",
+      "orientation": "portrait"
+    },
   "source-directories": [
     "source"
   ],
