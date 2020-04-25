@@ -11,31 +11,65 @@ component Main {
   state totalRounds : Number = 8
   state bkg : Bkg = Bkg::Neutral
   state streak : Number = 0
+  state roundHighScore : Number = 2
 
+get totalRoundNumber : Number {
+  if (streak == 0) {
+    1
+  } else if (streak <= 7) {
+    2
+  } else if (streak <= 14) {
+    3
+  }  else if (streak <= 21) {
+    4
+  } else if (streak <= 28) {
+    5
+  } else if (streak <= 35) {
+    6
+  }  else if (streak <= 42) {
+    7
+  }  else {
+    8
+  }
+}
   fun render : Html {
     <div::base>
       <link 
         rel="stylesheet" 
         href="https://cdn.jsdelivr.net/gh/tonsky/FiraCode@2/distr/fira_code.css"
       />
-      <audio autoplay="autoplay" id="begin">
+      <audio id="begin">
         <source src="sound/begin.wav" type="audio/wav"/>
       </audio>
-      <audio autoplay="autoplay" id="rest">
+      <audio id="rest">
         <source src="sound/rest.wav" type="audio/wav"/>
       </audio>
 
-      <p::streak>
-        <{ "🔥" + Number.toString(streak) + " Login" }>
-      </p>
+      <div style="text-align: right;">
+      <div::streak style="display: inline;">
+        <{ "🔥" + Number.toString(streak)  }>
+      </div>
+      <a::streak style="display: inline;">
+      if (false) {
+        "Login"
+      }
+      </a>
+      </div>
 
       <h1>
         <{ display(sec) }>
       </h1>
 
+      if (false) {
       <h2 class="round">
-        <{ Number.toString(round) + "/" + Number.toString(totalRounds) }>
+        <{ Number.toString(round) + "/" + Number.toString(roundHighScore) }>
       </h2>
+      } else {
+      <h2 class="round">
+        <{ Number.toString(round) + "/" + Number.toString(totalRoundNumber) }>
+      </h2>
+      }
+
 
       <div>
         <button::btn onClick={click}>
@@ -72,12 +106,13 @@ component Main {
 
   fun componentDidMount : Promise(Never, Void) {
     parallel {
-      Debug.log(s)
-      next { streak = s }
+      next { streak = s, roundHighScore = r }
     }
   } where {
     s =
       getStreakFromStorage()
+    r =
+      getRoundHighScore()
   }
   use Provider.Tick {
     ticks =
@@ -85,26 +120,26 @@ component Main {
         if (sec == 3600) {
           next { count = false }
         } else if (count) {
-        try {
-          if ( (sec + 1) % 30 == 0) {
-            play("begin")
-          } else if ( (sec + 1) % 30 == 20) {
-            play("rest")
-          } else {
-            true
-          }
-          next
-            {
-              sec = sec + 1,
-              round = Math.floor((sec + 1) / 30) + 1,
-              bkg =
-                if ((sec + 1) % 30 < 20) {
-                  Bkg::Green
-                } else {
-                  Bkg::Red
-                }
+          try {
+            if ( (sec + 1) % 30 == 0) {
+              play("begin")
+            } else if ( (sec + 1) % 30 == 20) {
+              play("rest")
+            } else {
+              true
             }
-          }
+            next
+              {
+                sec = sec + 1,
+                round = Math.floor((sec + 1) / 30) + 1,
+                bkg =
+                  if ((sec + 1) % 30 < 20) {
+                    Bkg::Green
+                  } else {
+                    Bkg::Red
+                  }
+              }
+            }
         } else {
           next {  }
         }
@@ -119,10 +154,29 @@ component Main {
     })()
     `
   }
+  fun setRoundHighScore (n : Number) : Promise(Never, Void) {
+    parallel {
+      `window.localStorage.setItem('roundMax', #{n})`
+      next { roundHighScore = n }
+    }
+  }
+  fun getRoundHighScore : Number {
+    `
+    (() => {
+      var roundHighScore = parseInt(localStorage.getItem('roundMax'));
+      if (isNaN(roundHighScore)) {
+        window.localStorage.setItem('roundMax', 2);
+        roundHighScore = 2;
+      }
+      return roundHighScore;
+    })()
+    `
+  }
   fun getStreakFromStorage : Number {
     `
     (() => {
       var streak = parseInt(localStorage.getItem('streak'));
+      console.log(streak);
       if (isNaN(streak)) {
         window.localStorage.setItem('streak', 0);
         streak = 0;
@@ -134,7 +188,7 @@ component Main {
 
   fun setStreak (n : Number) : Promise(Never, Void) {
     parallel {
-      `window.localStorage.setItem('streak', n)`
+      `window.localStorage.setItem('streak', #{n})`
       next { streak = n }
     }
   }
@@ -266,7 +320,7 @@ component Main {
     font-size: 3rem;
     margin-top: 0rem;
     margin-bottom: 0rem;
-    padding: 0 5rem;
+    padding: 0 1rem;
 
     @media (max-width: 800px) {
       font-size: 2.5rem;
