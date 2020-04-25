@@ -1,3 +1,199 @@
+enum Tab {
+  Upper
+  Lower
+  Abs
+  Full
+  None
+}
+
+store Workout.Store {
+  state active : Tab = Tab::Upper
+
+  fun click (val : Tab) : Promise(Never, Void) {
+    next { active = val }
+  }
+}
+
+component TabButton {
+  connect Workout.Store exposing { active, click }
+
+  style tab {
+    font-size: 1.2rem;
+    display: inline;
+    border-color: #dbdbdb;
+    border-style: solid;
+    border-width: 1px;
+    margin-bottom: 0;
+    position: relative;
+    padding: 1rem;
+    flex-basis: 100%;
+    font-size: 1em;
+    font-weight: 600;
+    line-height: 1.5;
+
+    if (val == active) {
+      color: #FFF;
+      background-color: hsl(217, 71%, 53%);
+    }
+  }
+
+  property val : Tab = Tab::None
+  property text : String = "Tab Button"
+
+  fun render : Html {
+    <li::tab
+      onClick={
+        (event : Html.Event) : Promise(Never, Void) {
+          click(val)
+        }
+      }>
+
+      <a>
+        <span>
+          "#{text}"
+        </span>
+      </a>
+
+    </li>
+  }
+}
+
+component Workout {
+  connect Workout.Store exposing { active }
+
+  style tabs {
+    ul {
+      display: flex;
+      flex-direction: row;
+      color: #4a4a4a;
+    }
+  }
+
+  style sm {
+    font-size: 1rem;
+  }
+
+  fun render : Html {
+    <div>
+      <h3>
+        "Choices"
+      </h3>
+
+      <div::tabs>
+        <ul>
+          <TabButton
+            text="Upper Body"
+            val={Tab::Upper}/>
+
+          <TabButton
+            text="Lower Body"
+            val={Tab::Lower}/>
+
+          <TabButton
+            text="Abs"
+            val={Tab::Abs}/>
+
+          <TabButton
+            text="Full Body"
+            val={Tab::Full}/>
+        </ul>
+
+        case (active) {
+          Tab::Upper =>
+            <div>
+              <h4>
+                "Pushups"
+              </h4>
+
+              <p::sm>
+                "Easy: Knee Pushups"
+              </p>
+
+              <p::sm>
+                "Medium: Pushups"
+              </p>
+
+              <p::sm>
+                "Hard: Clap Pushups"
+              </p>
+
+              <p::sm>
+                " Insane: 1-Hand Pushups"
+              </p>
+            </div>
+
+          Tab::Lower =>
+            <div>
+              <h4>
+                "Squats"
+              </h4>
+
+              <p::sm>
+                "Easy: Squat"
+              </p>
+
+              <p::sm>
+                "Medium: Jumping Squat"
+              </p>
+
+              <p::sm>
+                "Hard: Jumping Squat"
+              </p>
+
+              <p::sm>
+                "Insane: 1-Leg Squat"
+              </p>
+
+              <p::sm>
+                " (Always know your limits and don't hurt yourselves.)"
+              </p>
+            </div>
+
+          Tab::Abs =>
+            <div>
+              <p>
+                "Plank"
+              </p>
+
+              <p>
+                "1 round Bicycle Kick, 1 round Flutter Kick"
+              </p>
+            </div>
+
+          Tab::Full =>
+            <div>
+              <h4>
+                "Burpees"
+              </h4>
+
+              <p>
+                "Nuf said. You are a boss."
+              </p>
+            </div>
+
+          Tab::None => <div/>
+        }
+
+        <h3 style="margin-top: 40rem;">
+          "Tons of Benefits in No Time"
+        </h3>
+
+        <p>
+          "Don't let staying inside keep you down.  "
+        </p>
+
+        <p>
+          "
+          It is easy to waste hours at home doing very little but even less
+          than 10 minutes a day of focused activity can have astounding 
+          effects on your health, body and mind.
+          "
+        </p>
+      </div>
+    </div>
+  }
+}
+
 component Info {
   style info {
     padding: 0 30rem;
@@ -22,57 +218,7 @@ component Info {
 
   fun render : Html {
     <div::info>
-      <h3>
-        "Choices"
-      </h3>
-
-      <h4>
-        "Upper Body"
-      </h4>
-
-      <p>
-        "Easy: Knee Pushups, Medium: Pushups, Hard: Clap Pushups, Insane: Handstand Pushups"
-      </p>
-
-      <h4>
-        "Lower Body"
-      </h4>
-
-      <p>
-        "Easy: Squat, Medium: Jumping Squat, Hard: Jumping Squat, Insane: 1-Leg Squat"
-      </p>
-
-      <p>
-        " (Always know your limits and don't hurt yourselves.)"
-      </p>
-
-      <h4>
-        "Abs"
-      </h4>
-
-      <p>
-        "1 round Bicycle Kick, 1 round Flutter Kick"
-      </p>
-
-      <p>
-        "Kick"
-      </p>
-
-      <h3 style="margin-top: 40rem;">
-        "Tons of Benefits in No Time"
-      </h3>
-
-      <p>
-        "Don't let staying inside keep you down.  "
-      </p>
-
-      <p>
-        "
-          It is easy to waste hours at home doing very little but even less
-          than 10 minutes a day of focused activity can have astounding 
-          effects on your health, body and mind.
-          "
-      </p>
+      <Workout/>
 
       <h3>
         "The Secret"

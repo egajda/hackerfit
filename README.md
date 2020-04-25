@@ -12,7 +12,8 @@ Checkout branch 'getting-started' for an easy list of tasks that will serve as a
 - [x] Changes color
 - [x] Displays current round
 - [ ] Configurable Settings
-- [ ] Sound effects
+- [x] Sound effects
+- [ ] Streaks
 
 
 
